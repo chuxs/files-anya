@@ -20,7 +20,7 @@ The frontend is built using **Next.js 15** (App Router) and **Tailwind CSS v4**,
 
 ---
 
-## 📂 Project Structure
+## � Project Structure
 
 The project follows the Next.js App Router structure. Here is a detailed breakdown of the key directories and files:
 
@@ -29,11 +29,14 @@ Contains the application routes and pages.
 -   **`layout.js`**: The root layout that wraps the entire application. It includes global providers (`AuthProvider`, `SearchProvider`) and the `Navbar`.
 -   **`page.js`**: The landing page of the application.
 -   **`login/` & `signup/`**: Authentication pages.
+-   **`forgot-password/` & `reset-password/`**: Password recovery flow.
 -   **`products/`**: Dynamic routes for product details (e.g., `products/[id]`).
 -   **`buy/`**: The marketplace browsing page with filters.
 -   **`sell/`**: Form for listing new items.
 -   **`orders/`**: Order management for buyers and sellers.
 -   **`checkout/`**: Payment and order confirmation flow.
+-   **`address/`**: Address management page.
+-   **`payment/`**: Payment method management page.
 
 ### `components/`
 Reusable UI components used across the application.
@@ -44,7 +47,10 @@ Reusable UI components used across the application.
     -   User profile dropdown and logout.
 -   **`ProductCard.jsx`**: Displays individual product summaries in lists.
 -   **`ProductForm.jsx`**: A reusable form for creating and editing listings.
+-   **`ProductManagementCard.jsx`**: Card component for managing user's own listings.
 -   **`EditProfile.jsx`**: Modal for updating user information.
+-   **`AddPaymentMethod.jsx`**: Form for adding new payment methods.
+-   **`ProtectedRoute.js`**: Higher-order component/wrapper to protect routes requiring authentication.
 
 ### `context/`
 React Context providers for global state management.
@@ -62,7 +68,7 @@ Utility functions and API helpers.
 
 ---
 
-## 🚀 Getting Started
+## �🚀 Getting Started
 
 ### 1. Prerequisites
 -   Node.js (v18 or higher recommended)
