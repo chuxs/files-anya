@@ -1,99 +1,264 @@
 # Student TradeHub – Frontend
 
-This is the **frontend** of the Student TradeHub project — a student-only marketplace platform built for Memorial University students to buy, sell, and trade items safely within their community.
+A modern, responsive student-only marketplace platform built for Memorial University students to buy, sell, and trade items safely within their community.
+
+---
 
 ## 🧭 Overview
 
-The frontend is built using **Next.js 15** (App Router) and **Tailwind CSS v4**, providing a responsive and modern interface for browsing, posting, and managing listings. It connects to a Node.js backend via a REST API.
+The frontend provides an intuitive interface for students to browse products, manage listings, handle orders, and interact with the platform. It features a clean, minimalist design with full mobile responsiveness.
 
 ---
 
 ## ⚙️ Tech Stack
 
--   **Framework:** [Next.js 15.5.4](https://nextjs.org/) (App Router)
--   **Language:** JavaScript (React 19)
--   **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
--   **Icons:** [React Icons](https://react-icons.github.io/react-icons/)
--   **State Management:** React Context API (`AuthContext`, `SearchContext`)
--   **Authentication:** JWT-based (Custom implementation)
--   **Build Tool:** Turbopack (via Next.js)
+| Technology       | Version  | Purpose                         |
+| ---------------- | -------- | ------------------------------- |
+| **Next.js**      | 15.5.4   | React framework with App Router |
+| **React**        | 19.1.0   | UI library                      |
+| **Tailwind CSS** | 4.x      | Utility-first styling           |
+| **React Icons**  | 5.5.0    | Icon library                    |
+| **Turbopack**    | Built-in | Fast bundler for development    |
 
 ---
 
-## � Project Structure
+## 📁 Project Structure
 
-The project follows the Next.js App Router structure. Here is a detailed breakdown of the key directories and files:
-
-### `app/`
-Contains the application routes and pages.
--   **`layout.js`**: The root layout that wraps the entire application. It includes global providers (`AuthProvider`, `SearchProvider`) and the `Navbar`.
--   **`page.js`**: The landing page of the application.
--   **`login/` & `signup/`**: Authentication pages.
--   **`forgot-password/` & `reset-password/`**: Password recovery flow.
--   **`products/`**: Dynamic routes for product details (e.g., `products/[id]`).
--   **`buy/`**: The marketplace browsing page with filters.
--   **`sell/`**: Form for listing new items.
--   **`orders/`**: Order management for buyers and sellers.
--   **`checkout/`**: Payment and order confirmation flow.
--   **`address/`**: Address management page.
--   **`payment/`**: Payment method management page.
-
-### `components/`
-Reusable UI components used across the application.
--   **`Navbar.jsx`**: The main navigation bar. It handles:
-    -   Navigation links (Buy, Sell, Orders).
-    -   Search input (updates `SearchContext`).
-    -   Context-aware filters (shows different filters on Buy vs. Sell pages).
-    -   User profile dropdown and logout.
--   **`ProductCard.jsx`**: Displays individual product summaries in lists.
--   **`ProductForm.jsx`**: A reusable form for creating and editing listings.
--   **`ProductManagementCard.jsx`**: Card component for managing user's own listings.
--   **`EditProfile.jsx`**: Modal for updating user information.
--   **`AddPaymentMethod.jsx`**: Form for adding new payment methods.
--   **`ProtectedRoute.js`**: Higher-order component/wrapper to protect routes requiring authentication.
-
-### `context/`
-React Context providers for global state management.
--   **`AuthContext.js`**: Manages user authentication state.
-    -   Checks for a valid JWT token in `localStorage` on app mount.
-    -   Provides `user`, `loading`, `login`, `signup`, and `logout` to the app.
--   **`SearchContext.js`**: Manages global search and filter state.
-    -   Stores `searchTerm`, `selectedCategory`, `selectedCondition`, and `selectedStatus`.
-    -   Allows the `Navbar` search bar to filter results on the `buy` and `sell` pages.
-
-### `libs/`
-Utility functions and API helpers.
--   **`auth.js`**: Contains `fetch` wrappers for authentication endpoints (`/api/auth/login`, `/api/auth/signup`, etc.).
--   **`utlis.js`**: General utility functions (e.g., formatting dates, currency).
+```
+frontend/
+├── app/                        # Next.js App Router pages
+│   ├── layout.js               # Root layout with providers
+│   ├── page.js                 # Homepage (redirects to /buy)
+│   ├── globals.css             # Global styles
+│   ├── address/                # Address preferences page
+│   ├── admin/                  # Admin dashboard
+│   │   ├── layout.jsx          # Admin layout wrapper
+│   │   ├── page.jsx            # Admin dashboard home
+│   │   ├── products/           # Product management
+│   │   └── users/              # User management
+│   ├── buy/                    # Browse products page
+│   ├── checkout/               # Checkout flow
+│   ├── forgot-password/        # Password recovery
+│   ├── login/                  # User login
+│   ├── orders/                 # Order management
+│   │   ├── page.jsx            # Orders list
+│   │   └── [id]/               # Order details
+│   ├── payment/                # Payment methods
+│   ├── product/                # Product details
+│   │   └── [pid]/              # Dynamic product page
+│   ├── reset-password/         # Password reset
+│   ├── sell/                   # Seller dashboard
+│   ├── signup/                 # User registration
+│   └── verify-email/           # Email verification
+├── components/                 # Reusable UI components
+│   ├── AddPaymentMethod.jsx    # Payment form component
+│   ├── AdminRoute.js           # Admin route protection
+│   ├── EditProfile.jsx         # Profile editing modal
+│   ├── Navbar.jsx              # Global navigation bar
+│   ├── ProductCard.jsx         # Product display card
+│   ├── ProductForm.jsx         # Product create/edit form
+│   ├── ReviewModal.jsx         # Review submission modal
+│   ├── ReviewPrompt.jsx        # Review reminder prompt
+│   └── UserRoute.js            # User route protection
+├── context/                    # React Context providers
+│   ├── AuthContext.js          # Authentication state
+│   └── SearchContext.js        # Search & filter state
+├── libs/                       # Utility functions
+│   ├── auth.js                 # Authentication helpers
+│   └── utlis.js                # API functions & utilities
+├── next.config.mjs             # Next.js configuration
+├── postcss.config.mjs          # PostCSS configuration
+├── jsconfig.json               # Path aliases configuration
+└── package.json                # Dependencies & scripts
+```
 
 ---
 
-## �🚀 Getting Started
+## ✨ Features
 
-### 1. Prerequisites
--   Node.js (v18 or higher recommended)
--   npm or yarn
+### 🔐 Authentication
 
-### 2. Clone the repository
+- JWT-based authentication with MUN email verification
+- Login, signup, and password recovery flows
+- Email verification requirement for new accounts
+- Protected routes for authenticated users
+
+### 🛒 Marketplace (Buy)
+
+- Browse products from other students
+- Advanced filtering by:
+  - **Category**: Electronics, Books, Furniture, Clothing, Sports & Outdoors, Tools, Home & Kitchen, Other
+  - **Condition**: Brand New, Like New, Good, Used, Damaged
+- Real-time search functionality
+- Responsive product grid layout
+- Product cards with images, pricing, and seller info
+
+### 📦 Seller Dashboard (Sell)
+
+- Create new product listings with image upload
+- Manage existing products (edit/delete)
+- Filter products by status: Active, Draft, Inactive
+- Track product visibility and inventory
+
+### 🧾 Orders Management
+
+- View orders as buyer or seller
+- Track order status through fulfillment pipeline:
+  - **Pickup flow**: Pending → Ready for Pickup → Picked Up
+  - **Delivery flow**: Pending → Confirmed → Out for Delivery → Delivered
+- Filter orders by status
+- Detailed order information with product and user details
+
+### 💳 Checkout
+
+- Secure checkout flow with order summary
+- Quantity selection with inventory validation
+- Payment method management (save cards for future use)
+- Delivery options:
+  - **Pickup**: Collect from seller's location
+  - **Delivery**: Ship to your address
+- Address management with save option
+
+### ⭐ Reviews
+
+- Leave reviews for sellers after completed orders
+- Star rating system with comments
+- Review prompts for pending reviews
+- Seller rating display on profiles
+
+### 👤 User Profile
+
+- Edit profile information (name, profile picture)
+- Password change functionality
+- Payment method management
+- Address preferences (delivery & pickup)
+
+### 🛡️ Admin Panel
+
+- User management (view, suspend accounts)
+- Product moderation
+- Order monitoring
+- Platform overview and metrics
+
+---
+
+## 🧩 Components
+
+| Component          | Description                                                                   |
+| ------------------ | ----------------------------------------------------------------------------- |
+| `Navbar`           | Global navigation with search, filters, profile dropdown, and navigation tabs |
+| `ProductCard`      | Displays product info with image, price, condition badge, and action buttons  |
+| `ProductForm`      | Form for creating and editing products with image upload                      |
+| `EditProfile`      | Modal for editing user profile with picture upload                            |
+| `ReviewModal`      | Modal for submitting product/seller reviews                                   |
+| `ReviewPrompt`     | Prompt component for pending reviews                                          |
+| `UserRoute`        | HOC for protecting user-authenticated routes                                  |
+| `AdminRoute`       | HOC for protecting admin-only routes                                          |
+| `AddPaymentMethod` | Form for adding new payment methods                                           |
+
+---
+
+## 🔄 Context Providers
+
+### AuthContext
+
+Manages authentication state across the app:
+
+- `user` – Current user object
+- `loading` – Authentication loading state
+- `login()` – Login function
+- `signup()` – Registration function
+- `logout()` – Logout function
+- `checkAuth()` – Verify authentication status
+
+### SearchContext
+
+Manages search and filter state:
+
+- `searchTerm` – Current search query
+- `selectedCategory` – Active category filter
+- `selectedCondition` – Active condition filter
+- `selectedStatus` – Active status filter
+
+---
+
+## 🔌 API Utilities (`libs/utlis.js`)
+
+### User Functions
+
+- `fetchUserProfile(userId)` – Get user profile
+- `updateUserInfo(userId, data)` – Update user information
+- `updateUserInfoWithPicture(userId, data, file)` – Update profile with picture
+
+### Product Functions
+
+- `fetchAllProducts()` – Get all products
+- `fetchUserProducts()` – Get current user's products
+- `fetchProductById(productId)` – Get single product
+- `createProduct(formData)` – Create new product
+- `updateProduct(productId, formData)` – Update product
+- `deleteProduct(productId)` – Delete product
+
+### Order Functions
+
+- `fetchOrders(role)` – Get orders (buyer/seller)
+- `fetchOrderById(orderId)` – Get single order
+- `createOrder(payload)` – Place new order
+- `updateOrderStatus(orderId, status)` – Update order fulfillment status
+
+### Preference Functions
+
+- `fetchUserPreferences()` – Get saved payment/address
+- `updateUserPreferences(payload)` – Update preferences
+
+### Review Functions
+
+- `createReview(orderId, rating, comment)` – Submit review
+- `skipReview(orderId)` – Skip review prompt
+- `getSellerReviews(sellerId, page, limit)` – Get seller reviews
+- `getReviewByOrder(orderId)` – Get review for order
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- npm or yarn
+- Backend API running (default: `http://localhost:8800`)
+
+### 1. Clone the repository
+
 ```bash
 git clone https://github.com/<your-team>/StudentTradeHub.git
 cd StudentTradeHub/Web\ Application/frontend
 ```
 
-### 3. Install dependencies
+### 2. Install dependencies
+
 ```bash
 npm install
 ```
 
-### 4. Run Development Server
-Start the development server with Turbopack for faster HMR:
+### 3. Set up environment variables
+
+Create a `.env.local` file in the frontend directory:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8800
+```
+
+### 4. Run the development server
+
 ```bash
 npm run dev
 ```
-Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### 5. Build for Production
-To create an optimized production build:
+Then open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### 5. Build for production
+
 ```bash
 npm run build
 npm start
@@ -101,68 +266,64 @@ npm start
 
 ---
 
-## 🔑 Key Features & Implementation Details
+## 📜 Available Scripts
 
-### 🔐 Authentication
-Authentication is handled via **JWT (JSON Web Tokens)**.
-1.  **Login/Signup**: Users submit credentials via `libs/auth.js`.
-2.  **Token Storage**: On success, the JWT is stored in `localStorage`.
-3.  **Session Persistence**: `AuthContext` checks for this token on initialization. If valid, it fetches user details (`/api/auth/me`) and sets the `user` state.
-4.  **Protection**: Protected routes (like `/sell` or `/orders`) check the `user` state and redirect to `/login` if not authenticated.
-
-### 🔍 Search & Filtering
-The search functionality is global and persistent across the `buy` and `sell` pages.
--   **State**: Managed by `SearchContext`.
--   **Input**: The search bar in `Navbar` updates the context.
--   **Filtering**: The `buy` page subscribes to `SearchContext` to filter the displayed product list in real-time.
--   **Dynamic Filters**: The `Navbar` detects the current route (using `usePathname`) and displays relevant filters (e.g., "Status" filter is only shown on the `/sell` page).
-
-### 📱 Responsive Design
-The UI is fully responsive, built with Tailwind CSS.
--   **Mobile**: Shows a bottom navigation bar or simplified menu.
--   **Desktop**: Full navigation bar with expanded search and profile options.
+| Command         | Description                             |
+| --------------- | --------------------------------------- |
+| `npm run dev`   | Start development server with Turbopack |
+| `npm run build` | Build for production                    |
+| `npm start`     | Start production server                 |
 
 ---
 
-## 🛠️ Development Guidelines
+## 🌐 Environment Variables
 
-### Adding a New Page
-Create a new folder in `app/` with a `page.js` file.
-```javascript
-// app/newpage/page.js
-export default function NewPage() {
-  return <div>My New Page</div>;
-}
-```
-The route will be accessible at `/newpage`.
+| Variable              | Description          | Default                 |
+| --------------------- | -------------------- | ----------------------- |
+| `NEXT_PUBLIC_API_URL` | Backend API base URL | `http://localhost:8800` |
 
-### Using Authentication in Components
-Use the `useAuth` hook to access user data or auth methods.
-```javascript
-import { useAuth } from '@/context/AuthContext';
+---
 
-export default function MyComponent() {
-  const { user, logout } = useAuth();
+## 📱 Responsive Design
 
-  if (!user) return <p>Please log in.</p>;
+The application is fully responsive with breakpoints for:
 
-  return <button onClick={logout}>Logout {user.firstName}</button>;
-}
-```
+- **Mobile**: < 640px
+- **Tablet**: 640px - 1024px
+- **Desktop**: > 1024px
 
-### Styling
-Use **Tailwind CSS** utility classes.
--   Global styles are in `app/globals.css`.
--   Avoid inline styles; use Tailwind classes for consistency (e.g., `text-slate-900`, `bg-white`).
+Key responsive features:
+
+- Collapsible navigation
+- Mobile-optimized search bar
+- Adaptive grid layouts (1-4 columns)
+- Touch-friendly interactions
+
+---
+
+## 🎨 Design System
+
+- **Colors**: Slate-based neutral palette with accent colors for status badges
+- **Typography**: System font stack for optimal performance
+- **Spacing**: Consistent padding and margins using Tailwind's scale
+- **Components**: Rounded corners, subtle shadows, and clean borders
 
 ---
 
 ## 👥 Contributors
 
--   Olaiya Oluwatomisin – tomisiiiin
--   Labib Islam – labib-islam
--   Nafiur Rahman – Nafiur-rhyme
--   Anya Anya – Chuxs
--   Md Minhajul Abedin – Minhajul99
--   Yi Zhang – 1mag1ne1
--   Yixuan Liu – Yixuan-Liu1
+| Name                | GitHub                                           |
+| ------------------- | ------------------------------------------------ |
+| Olaiya Oluwatomisin | [@tomisiiiin](https://github.com/tomisiiiin)     |
+| Labib Islam         | [@labib-islam](https://github.com/labib-islam)   |
+| Nafiur Rahman       | [@Nafiur-rhyme](https://github.com/Nafiur-rhyme) |
+| Anya Anya           | [@Chuxs](https://github.com/Chuxs)               |
+| Md Minhajul Abedin  | [@Minhajul99](https://github.com/Minhajul99)     |
+| Yi Zhang            | [@1mag1ne1](https://github.com/1mag1ne1)         |
+| Yixuan Liu          | [@Yixuan-Liu1](https://github.com/Yixuan-Liu1)   |
+
+---
+
+## 📄 License
+
+This project is part of Memorial University's coursework.
